@@ -15,13 +15,15 @@ History:
     
     initial version: 0.1(20200701)
 
+    0.1.1 (20200716)
+        • Artifact version to 0.1.1
 ]]>-->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.911992</groupId>
     <artifactId>WAsys_Java_type_util</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <packaging>jar</packaging>
     <description>Common type-level utils for Java</description>
     <url>https://github.com/911992/WAsys_Java_type_util</url>

@@ -11,6 +11,9 @@ Created on: Jul 3, 2020 3:37:19 PM
  
 History:
     initial version: 0.1(20200701)
+
+    0.1.1(20200716)
+        • parse_no_filter, and parse methods now return templated Type_Signature based on given arg_type type
 */
 
 package wasys.lib.java_type_util.reflect.type_sig;
@@ -60,11 +63,12 @@ public class Type_Parser {
      * <p>
      * It simply calls the {@code parse(arg_type,arg_pol,null)} function, please read the {@code parse} method doc.
      * </p>
+     * @param <A> the type of signature, follows the {@code arg_type}
      * @param arg_type the type should be parsed (must <i>not</i> be {@code null})
      * @param arg_pol the policy should be considered (must <i>not</i> be {@code null})
      * @return A non-{@code null} type signature
      */
-    public static Type_Signature parse_no_filter(Class arg_type,Type_Signature_Parse_Policy arg_pol){
+    public static <A> Type_Signature<A> parse_no_filter(Class<A> arg_type,Type_Signature_Parse_Policy arg_pol){
         return parse(arg_type, arg_pol, null);
     }
     
@@ -92,12 +96,13 @@ public class Type_Parser {
      * <p>
      * If scraping parent type(s) is appreciated, so scraping will be go to {@link Object} type level inheritance.
      * </p>
+     * @param <A> the type of signature, follows the {@code arg_type}
      * @param arg_type the type should be parsed (must <i>not</i> be {@code null})
      * @param arg_pol the policy should be considered (must <i>not</i> be {@code null})
      * @param arg_filter the field filter
      * @return A non-{@code null} type signature
      */
-    public static Type_Signature parse(Class arg_type,Type_Signature_Parse_Policy arg_pol,Generic_Filter<Field> arg_filter){
+    public static <A> Type_Signature<A> parse(Class<A> arg_type,Type_Signature_Parse_Policy arg_pol,Generic_Filter<Field> arg_filter){
         if(arg_filter == null){
             arg_filter = Generic_Filter.NULL_OBJECT;
         }

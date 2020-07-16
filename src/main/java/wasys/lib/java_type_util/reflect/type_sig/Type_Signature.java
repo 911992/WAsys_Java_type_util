@@ -11,6 +11,11 @@ Created on: Jul 3, 2020 12:40:47 PM
  
 History:
     initial version: 0.1(20200701)
+
+    0.1.1(20200716)
+        • Type now is templated/generic based on type this signature related to
+        • type, and obj_factory fields(also setter, and getter funcs) now follow the class template-type
+        • create_object returns type of generic type instead of Object
 */
 
 package wasys.lib.java_type_util.reflect.type_sig;
@@ -26,15 +31,16 @@ import java.util.ArrayList;
  * <p>
  * This type is almost immutable, except the user-customable {@code meta_name} that would be used to hold a user-defined meta name/data.
  * </p>
+ * @param <A> the type this signature related to
  * @author https://github.com/911992
  */
-public final class Type_Signature extends Exceptional_Object{
+public final class Type_Signature<A> extends Exceptional_Object{
     /**
      * Type this signature related to.
      * <p>This is non-{@code null}</p>
      * <p>This field is immutable.</p>
      */
-    private final Class type;
+    private final Class<A> type;
     
     /**
      * list of proceed fields signature.
@@ -68,7 +74,7 @@ public final class Type_Signature extends Exceptional_Object{
      * This is {@code null} by default, that will force the {@code create_object} method to use {@code type}'s default constructor for instancing a object.
      * </p>
      */
-    private Object_Factory obj_factory;
+    private Object_Factory<A> obj_factory;
 
     /**
      * Default constructor.
@@ -76,7 +82,7 @@ public final class Type_Signature extends Exceptional_Object{
      * @param proceed_fields proceed fields of given type
      * @param parse_policy the policy were used for parsing the type
      */
-    public Type_Signature(Class type, ArrayList<Type_Field_Signature> proceed_fields, Type_Signature_Parse_Policy parse_policy) {
+    public Type_Signature(Class<A> type, ArrayList<Type_Field_Signature> proceed_fields, Type_Signature_Parse_Policy parse_policy) {
         this.type = type;
         this.proceed_fields = proceed_fields;
         this.parse_policy = parse_policy;
@@ -86,7 +92,7 @@ public final class Type_Signature extends Exceptional_Object{
      * Returns the type this signature related to.
      * @return the {@code type} var
      */
-    public Class getType() {
+    public Class<A> getType() {
         return type;
     }
 
@@ -134,7 +140,7 @@ public final class Type_Signature extends Exceptional_Object{
      * Sets the (user-defined) object factory.
      * @param obj_factory the concreted (or {@code null)} object factory
      */
-    public void setObj_factory(Object_Factory obj_factory) {
+    public void setObj_factory(Object_Factory<A> obj_factory) {
         this.obj_factory = obj_factory;
     }
     
@@ -255,8 +261,8 @@ public final class Type_Signature extends Exceptional_Object{
      * </p>
      * @return an object of {@code type}
      */
-    public Object create_object(){
-        Object _res;
+    public A create_object(){
+        A _res;
         if(obj_factory!=null){
             _res = obj_factory.create_Object(type);
         }else{
@@ -264,7 +270,7 @@ public final class Type_Signature extends Exceptional_Object{
                 Constructor _cons = type.getDeclaredConstructor();
                 if(_cons!=null){
                     _cons.setAccessible(true);
-                    _res = _cons.newInstance();
+                    _res = (A)_cons.newInstance();
                 }else{
                     throw new NullPointerException(String.format("Type %s has no default constructor", type.getName()));
                 }

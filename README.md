@@ -2,7 +2,7 @@
 Common type-level utils for Java  
 
 ## Revision History
-Latest: v0.1.0 (Jul 1, 2020)  
+Latest: v0.1.1 (Jul 16, 2020)  
 Please refer to [release_note.md](./release_note.md) file  
 
 ## Requirements
@@ -15,20 +15,27 @@ Each modules would cover a specific requirements/functionalities.
 ## Installation
 Artifacts could be grabed from central maven(or build by maven), and or ant.
 
-**Maven**  
+**Maven** *(source/bin format: 1.5)*  
 ```xml
 <dependency>
     <groupId>com.github.911992</groupId>
     <artifactId>WAsys_Java_type_util</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
+Or you would clone the repo, and build it as following:
+```
+mvn clean package
+```
+Artifact under `target` folder
 
-**Ant**  
+
+**Ant** *(source/bin format: jdk 1.7)*  
 Clone this repo, and build it by `ant` as following
 ```
 ant clean jar
 ```
+Artifact under `dist` folder
 
 ## Module::Type Signature
 ![Type Signature Module Media Img](./_docs/_diagrams/media_cover_type_signature.svg)  
@@ -54,9 +61,10 @@ int model;
 }
 /*...*/
 public static void main(String args[]) {
+    //or Type_Signature<Entity0> _ts0=...
     Type_Signature _ts0=Type_Parser.parse_no_filter(Entity0.class, Type_Signature_Parse_Policy.DEFAULT_POLICY);
     Entity0 _e0=new Entity0();
-    Type_Field_Signature _fage= _ts0.get_by_name("model");
+    Type_Field_Signature _fage= _ts0.get_field_by_name("model");
     _fage.set(_e0, 911);
     System.out.printf("Model: %d\n",_e0.model);//911
 }
@@ -77,7 +85,8 @@ public String name;
 }
 /*...*/
 public static void main(String args[]) {
-Type_Signature _ts0=Type_Parser.parse_no_filter(Class.forName("java_type_util_test.Entity1"), new Type_Signature_Parse_Policy(Type_Signature_Parse_Policy.ACCESS_SPECIFIER_ALL, false/*include transient*/, false/*include static*/));
+    //or Type_Signature<?> _ts0=...
+    Type_Signature _ts0=Type_Parser.parse_no_filter(Class.forName("java_type_util_test.Entity1"), new Type_Signature_Parse_Policy(Type_Signature_Parse_Policy.ACCESS_SPECIFIER_ALL, false/*include transient*/, false/*include static*/));
     Type_Field_Signature _fname = _ts0.get_field_by_name("name");
     /*Going to create a new object by default constructor, since there is no Object_Factory has associated*/
     /*Using a Object_Factory is HIGHLY recomended over default constructor!*/
@@ -99,7 +108,8 @@ int child_id;
 }
 /*...*/
 public static void main(String argsp[]) {
-    Type_Signature _ts = Type_Parser.parse_no_filter(Entity2_C.class, new Type_Signature_Parse_Policy(Type_Signature_Parse_Policy.ACCESS_SPECIFIER_ALL, false/*excluding transient fields*/, true/*including static fields*/, Field_Definition_Order.From_Parent_To_Child/*scrap parent fields too*/));
+    //or Type_Signature<?> _ts =...
+    Type_Signature<Entity2_C> _ts = Type_Parser.parse_no_filter(Entity2_C.class, new Type_Signature_Parse_Policy(Type_Signature_Parse_Policy.ACCESS_SPECIFIER_ALL, false/*excluding transient fields*/, true/*including static fields*/, Field_Definition_Order.From_Parent_To_Child/*scrap parent fields too*/));
     for(Type_Field_Signature _tfs : _ts.getProceed_fields()){
         System.out.printf("Field name:%s\n",_tfs.getField().getName());
     }
