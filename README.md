@@ -2,7 +2,7 @@
 Common type-level utils for Java  
 
 ## Revision History
-Latest: v0.1.1 (Jul 16, 2020)  
+Latest: v0.1.5 (Aug 22, 2020)  
 Please refer to [release_note.md](./release_note.md) file  
 
 ## Requirements
@@ -20,7 +20,7 @@ Artifacts could be grabed from central maven(or build by maven), and or ant.
 <dependency>
     <groupId>com.github.911992</groupId>
     <artifactId>WAsys_Java_type_util</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.5</version>
 </dependency>
 ```
 Or you would clone the repo, and build it as following:
@@ -30,7 +30,7 @@ mvn clean package
 Artifact under `target` folder
 
 
-**Ant** *(source/bin format: jdk 1.7)*  
+**Ant** *(source/bin format: jdk 1.6)*  
 Clone this repo, and build it by `ant` as following
 ```
 ant clean jar
@@ -120,5 +120,28 @@ public static void main(String argsp[]) {
     Field name:child_name
     Field name:child_id
     */
+}
+```
+
+#### Using `Generic_Object_Factory` 
+```java
+class Plain_POJO3{
+    public void hi(){
+        System.out.println("Hello! Nothing especial here...");
+    }
+    public Plain_POJO3() {
+        System.out.println("Instancing...");
+    }
+}
+ /*...*/
+ public static void main(String[] args) {
+    try {
+        //or Generic_Object_Factory<Plain_POJO3> _entity_factory = Generic_Object_Factory.new_instance(Plain_POJO3.class);
+        Generic_Object_Factory<Plain_POJO3> _entity_factory = new Generic_Object_Factory<>(Plain_POJO3.class);
+        Plain_POJO3 _smp = _entity_factory.create_Object();//"Instancing..."
+        _smp.hi();//"Hello! Nothing especial here..."
+    } catch (Exception wth) {
+        wth.printStackTrace();
+    }   
 }
 ```

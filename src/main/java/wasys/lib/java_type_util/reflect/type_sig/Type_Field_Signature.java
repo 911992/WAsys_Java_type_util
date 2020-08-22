@@ -10,10 +10,14 @@ Created on: Jul 2, 2020 9:24:15 PM
     @author https://github.com/911992
  
 History:
+    0.1.5(20200822)
+        • Extending from Exceptional_Object_Adapter, since Exceptional_Object is now an interface
+
     initial version: 0.1(20200701)
  */
 package wasys.lib.java_type_util.reflect.type_sig;
 
+import wasys.lib.java_type_util.lib_common.Exceptional_Object_Adapter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -42,7 +46,7 @@ import java.lang.reflect.Method;
  * </p>
  * @author https://github.com/911992
  */
-public class Type_Field_Signature extends Exceptional_Object{
+public class Type_Field_Signature extends Exceptional_Object_Adapter{
 
     /**
      * Pointer to related field.

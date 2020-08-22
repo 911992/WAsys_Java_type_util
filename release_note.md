@@ -4,6 +4,31 @@ repo: https://github.com/911992/WAsys_Java_type_util
 Author: [911992](https://github.com/911992)  
 *(NOTE: following list carries mentionable(not all) changes. For detailed changes, check source code(s))*  
 
+**0.1.5** (Jul 16, 2020)
+0. Added new package `wasys.lib.java_type_util.lib_common` to place internal-lib common types
+1. `Source_Code::Exceptional_Object`
+    * Moved to package `wasys.lib.java_type_util.lib_common`
+    * Changed the type as an `interface`(previously as `abstract class`)
+    * Removed `last_call_ex` field
+    * Removed `get_last_call_ex`, and `was_last_call_success` body
+    * Updated documentation
+2. Added `Exceptional_Object_Adapter` class as adapter class for `Exceptional_Object` interface
+3. `Source_Code::Type_Field_Signature`
+    * Extending from `Exceptional_Object_Adapter`, since `Exceptional_Object` is now an interface
+4. `Source_Code::Type_Signature`
+    * Extending from `Exceptional_Object_Adapter`, since `Exceptional_Object` is now an interface
+5. Added `Generic_Object_Factory` class as a generic implementation of `Object_Factory`
+6. Diagrams
+    * Updated [class diagram](./_docs/_diagrams/class_diagram.svg) (changes could be found [here](./_docs/_diagrams/class_diagram_version_history.md))
+7. Repo
+    * Ant repo(`build.xml`) source/bin changed from `1.7` to `1.6`
+    * update `pom.xml` file
+        * Updated artifact to `0.1.5`
+    * Updated `README.md` file
+        * Added example related to `Generic_Object_Factory` (section *Using `Generic_Object_Factory`*)
+
+<hr/>
+
 **0.1.1** (Jul 16, 2020)
 
 **Module::Type Signature**

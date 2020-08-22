@@ -10,16 +10,20 @@ Created on: Jul 3, 2020 12:40:47 PM
     @author https://github.com/911992
  
 History:
-    initial version: 0.1(20200701)
+    0.1.5(20200822)
+        • Extending from Exceptional_Object_Adapter, since Exceptional_Object is now an interface
 
     0.1.1(20200716)
         • Type now is templated/generic based on type this signature related to
         • type, and obj_factory fields(also setter, and getter funcs) now follow the class template-type
         • create_object returns type of generic type instead of Object
+
+    initial version: 0.1(20200701)
 */
 
 package wasys.lib.java_type_util.reflect.type_sig;
 
+import wasys.lib.java_type_util.lib_common.Exceptional_Object_Adapter;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
@@ -34,7 +38,7 @@ import java.util.ArrayList;
  * @param <A> the type this signature related to
  * @author https://github.com/911992
  */
-public final class Type_Signature<A> extends Exceptional_Object{
+public final class Type_Signature<A> extends Exceptional_Object_Adapter{
     /**
      * Type this signature related to.
      * <p>This is non-{@code null}</p>
