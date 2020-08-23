@@ -10,6 +10,10 @@ Created on: Aug 22, 2020 4:56:07 AM
     @author https://github.com/911992
  
 History:
+    0.1.7(20200823)
+        • Renamed create_object(all) to create_object (that bad-big O boy!)  (╯°□°)╯︵ ┻━┻
+        • Updated documentation of create_object(:Class) method
+
     initial version: 0.1.5(20200822)
 */
 
@@ -109,18 +113,21 @@ public class Generic_Object_Factory<A> implements Object_Factory<A>{
     }
     
     /**
-     * Calls the {@code create_Object()} method, but will not throws any exception by it.
+     * Calls the {@code create_object()} method, but will not throws any exception by it.
      * <p>
-     * If grabbing any {@link Throwable} object was thrown by instancing the type is desired, use {@code create_Object()} instead.
+     * If grabbing any {@link Throwable} object was thrown by instancing the type is desired, use {@code create_object()} instead.
+     * </p>
+     * <p>
+     * <b>Note:</b> checking if given {@code arg_type} could be {@code null} is highly recommended. It could be {@code null} mostly when an instance of exact {@code A} Required.
      * </p>
      * @param arg_type (will be ignored)the type {@link Object_Factory} may be considered during instancing
      * @return return type of {@code A}, or {@code null} in case of any exception/error
-     * @since 0.1.5
+     * @since 0.1.7
      */
     @Override
-    public A create_Object(Class arg_type){
+    public A create_object(Class arg_type){
         try {
-            return create_Object();
+            return create_object();
         } catch (Throwable wt) {
             return null;
         }
@@ -129,14 +136,14 @@ public class Generic_Object_Factory<A> implements Object_Factory<A>{
     /**
      * Calls the default({@code def_constructor}) constructor with no argument.
      * <p>
-     * Considering {@code create_Object(:Class)} method that will not throw any-exception, instead returns a {@code null} ptr
+     * Considering {@code create_object(:Class)} method that will not throw any-exception, instead returns a {@code null} ptr
      * </p>
      * @return an instance of typed param @{code A} (result of constructor)
      * @throws ExceptionInInitializerError if there was an problem loading/linking the related class
      * @throws InvocationTargetException if the constructor (type that hosts) throwsn an exception
-     * @since 0.1.5
+     * @since 0.1.7
      */
-    public A create_Object()throws ExceptionInInitializerError,InvocationTargetException{
+    public A create_object()throws ExceptionInInitializerError,InvocationTargetException{
         try {
             return def_constructor.newInstance();
         } catch(ExceptionInInitializerError wt){

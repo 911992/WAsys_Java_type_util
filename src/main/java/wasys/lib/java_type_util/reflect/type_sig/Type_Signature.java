@@ -10,6 +10,9 @@ Created on: Jul 3, 2020 12:40:47 PM
     @author https://github.com/911992
  
 History:
+    0.1.7(20200823)
+        • Calling renamed create_object() of Object_Factory
+
     0.1.5(20200822)
         • Extending from Exceptional_Object_Adapter, since Exceptional_Object is now an interface
 
@@ -268,7 +271,7 @@ public final class Type_Signature<A> extends Exceptional_Object_Adapter{
     public A create_object(){
         A _res;
         if(obj_factory!=null){
-            _res = obj_factory.create_Object(type);
+            _res = obj_factory.create_object(type);
         }else{
             try {
                 Constructor _cons = type.getDeclaredConstructor();

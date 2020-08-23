@@ -3,6 +3,14 @@ repo: https://github.com/911992/WAsys_Java_type_util
 file: [class_diagram](./class_diagram.svg)  
 Author: [911992](https://github.com/911992)  
 
+**v0.1.7** (Aug 23, 2020)  
+
+(that bad-big O boy!)  (╯°□°)╯︵ ┻━┻  
+0. renamed `create_Object()` to `create_object()` in `Object_Factory` interface
+1. renamed `create_Object()`s to `create_object()` in `Generic_Object_Factory` class
+
+<hr/>
+
 **v0.1.5** (Aug 22, 2020)  
 
 0. `Exceptional_Object`

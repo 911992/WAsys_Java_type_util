@@ -12,6 +12,9 @@ Created on: Jul 14, 2020 17:31:33 PM
     @author https://github.com/911992
  
 History:
+    0.1.7 (20200823)
+        • Artifact version to 0.1.7
+
     0.1.5 (20200822)
         • Artifact version to 0.1.5
 
@@ -25,7 +28,7 @@ History:
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.911992</groupId>
     <artifactId>WAsys_Java_type_util</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.7</version>
     <packaging>jar</packaging>
     <description>Common type-level utils for Java</description>
     <url>https://github.com/911992/WAsys_Java_type_util</url>

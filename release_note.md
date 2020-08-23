@@ -4,7 +4,35 @@ repo: https://github.com/911992/WAsys_Java_type_util
 Author: [911992](https://github.com/911992)  
 *(NOTE: following list carries mentionable(not all) changes. For detailed changes, check source code(s))*  
 
-**0.1.5** (Jul 16, 2020)
+**0.1.7** (Aug 23, 2020)
+
+**Module::Type Signature**
+
+(that bad-big O boy!)  (╯°□°)╯︵ ┻━┻  
+
+0. `Source_Code::Object_Factory`
+    * renamed `create_Object()` to `create_object()`
+    * Updated documentation of `create_object()` method
+1. `Source_Code::Generic_Object_Factory`
+    * renamed `create_Object()` to `create_object()`
+    * Updated documentation of `create_object(:Class)` method
+2. `Source_Code::Type_Signature`
+    * Calling renamed `create_object()` of Object_Factory
+3. Diagrams
+    * Updated [class diagram](./_docs/_diagrams/class_diagram.svg) (changes could be found [here](./_docs/_diagrams/class_diagram_version_history.md))
+4. Repo
+    * update `pom.xml` file
+        * Updated artifact to `0.1.7`
+    * Updated `README.md` file
+        * Fixed the `create_Object` to `create_object` in *Using `Generic_Object_Factory`*  example usage
+
+<hr/>
+
+
+**0.1.5** (Aug 22, 2020)
+
+**Module::Type Signature**
+
 0. Added new package `wasys.lib.java_type_util.lib_common` to place internal-lib common types
 1. `Source_Code::Exceptional_Object`
     * Moved to package `wasys.lib.java_type_util.lib_common`

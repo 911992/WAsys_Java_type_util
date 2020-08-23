@@ -10,11 +10,15 @@ Created on: Jul 14, 2020 3:34:07 PM
     @author https://github.com/911992
  
 History:
-    initial version: 0.1(20200701)
+    0.1.7(20200823)
+        • Renamed create_Object to create_object (that bad-big O boy!)  (╯°□°)╯︵ ┻━┻
+        • Updated documentation of create_object() method
 
     0.1.1(20200716)
         • Type now is generic/templated
-        • create_Object method now returns the template<A> type
+        • create_object method now returns the template<A> type
+
+    initial version: 0.1(20200701)
 */
 
 package wasys.lib.java_type_util.reflect.type_sig;
@@ -27,12 +31,16 @@ package wasys.lib.java_type_util.reflect.type_sig;
  * </p>
  * @param <A> The type this object is explicitly related to
  * @author https://github.com/911992
+ * @since 0.1.7
  */
 public interface Object_Factory<A> {
     /**
      * Should return a non-{@code null} expected object which is assignable to given {@code arg_type}.
-     * @param arg_type the type returning object should be assignable or equal
+     * <p>
+     * <b>Note:</b> checking if given {@code arg_type} could be {@code null} is highly recommended. It could be {@code null} mostly when an instance of exact {@code A} Required.
+     * </p>
+     * @param arg_type the type returning object should be assignable or equal (nullable)
      * @return an object of related template type
      */
-    public A create_Object(Class arg_type);
+    public A create_object(Class arg_type);
 }
