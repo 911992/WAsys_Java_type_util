@@ -10,6 +10,9 @@ Created on: Jul 3, 2020 2:46:37 PM
     @author https://github.com/911992
  
 History:
+    0.1.9(20200909)
+        • Minor doc update
+
     initial version: 0.1(20200701)
 */
 
@@ -109,7 +112,7 @@ public class Type_Signature_Parse_Policy {
      * @param include_transient tells if {@code transient} fields should be included
      * @param include_static tells if {@code static} fields should be included
      * @param include_parent_fields tells if parent type(s) should be scraped or not
-     * @param field_order specifies the field scraping from parent->child, or viceversa
+     * @param field_order specifies the field scraping from parent-&gt;child, or viceversa
      */
     private Type_Signature_Parse_Policy(int access_specifier, boolean include_transient, boolean include_static, boolean include_parent_fields, Field_Definition_Order field_order) {
         this.access_specifier = access_specifier;

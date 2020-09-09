@@ -4,6 +4,21 @@ repo: https://github.com/911992/WAsys_Java_type_util
 Author: [911992](https://github.com/911992)  
 *(NOTE: following list carries mentionable(not all) changes. For detailed changes, check source code(s))*  
 
+**0.1.9** (Sept 9, 2020)
+
+**Module::Type Signature**
+
+(that stupid `==` instead of `!=`)  `(╯°□°)╯︵ ┻━┻`  
+
+0. `Source_Code::Type_Field_Signature`
+    * Fixed the very stupid bug, where `==` must be `=!` about field getter method `null`ify check (oh god, this is maximum stupidity lvl) `(╯°□°)╯︵ ┻━┻`
+1. Repo
+    * update `pom.xml` file
+        * Updated artifact to `0.1.9`
+        * Added copyright literal for generated javadoc(plugin)
+
+<hr/>
+
 **0.1.7** (Aug 23, 2020)
 
 **Module::Type Signature**

@@ -10,6 +10,10 @@ Created on: Jul 2, 2020 9:24:15 PM
     @author https://github.com/911992
  
 History:
+    0.1.9(20200909)
+        • Fixed the very stupid bug, where == should be supposed =! about field getter method (oh god) (╯°□°)╯︵ ┻━┻
+        • Minor doc update
+
     0.1.5(20200822)
         • Extending from Exceptional_Object_Adapter, since Exceptional_Object is now an interface
 
@@ -56,7 +60,7 @@ public class Type_Field_Signature extends Exceptional_Object_Adapter{
     
     /**
      * Pointer to related getter method.
-     * <p>This could be {@code null}<./p>
+     * <p>This could be {@code null}</p>
      */
     private final Method getter_func;
     
@@ -143,7 +147,7 @@ public class Type_Field_Signature extends Exceptional_Object_Adapter{
     public Object get(Object arg_ins) {
         Object _res;
         try {
-            if (this.getGetter_func() == null) {
+            if (this.getGetter_func() != null) {
                 _res = getGetter_func().invoke(arg_ins);
             }else{
                 _res = getField().get(arg_ins);
