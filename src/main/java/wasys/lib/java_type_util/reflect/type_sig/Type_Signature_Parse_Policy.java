@@ -10,6 +10,10 @@ Created on: Jul 3, 2020 2:46:37 PM
     @author https://github.com/911992
  
 History:
+    0.2.1(20200926)
+        • Added field include_skipped_fields:bool and its getter method
+        • Updated the default constructor to include the include_skipped_fields field
+
     0.1.9(20200909)
         • Minor doc update
 
@@ -19,6 +23,7 @@ History:
 package wasys.lib.java_type_util.reflect.type_sig;
 
 import java.lang.reflect.Modifier;
+import wasys.lib.java_type_util.reflect.type_sig.annotation.Field_Info;
 
 
 /**
@@ -84,6 +89,11 @@ public class Type_Signature_Parse_Policy {
      * Specifies the field order scraping when scraping inherited parent(s) are appreciated.
      */
     private final Field_Definition_Order field_order;
+    
+    /**
+     * Specifies if fields have marked as skipped(using {@link Field_Info}) should be considered in parsing mode or not.
+     */
+    private final boolean include_skipped_fields;
 
     /**
      * Default constructor for ignoring scrap for inherited type(s).
@@ -92,7 +102,7 @@ public class Type_Signature_Parse_Policy {
      * @param include_static tells if {@code static} fields should be included
      */
     public Type_Signature_Parse_Policy(int access_specifier, boolean include_transient, boolean include_static) {
-        this(access_specifier, include_transient, include_static, false, null);
+        this(access_specifier, include_transient, include_static, false, null,false);
     }
     
     /**
@@ -103,23 +113,25 @@ public class Type_Signature_Parse_Policy {
      * @param field_order specifies the field scraping from parent-&gt;child, or viceversa
      */
     public Type_Signature_Parse_Policy(int access_specifier, boolean include_transient, boolean include_static, Field_Definition_Order field_order) {
-        this(access_specifier, include_transient, include_static, true, field_order);
+        this(access_specifier, include_transient, include_static, true, field_order,false);
     }
     
     /**
      * (internal lib use) Default constructor.
-     * @param access_specifier field access specifier should be considered
-     * @param include_transient tells if {@code transient} fields should be included
-     * @param include_static tells if {@code static} fields should be included
-     * @param include_parent_fields tells if parent type(s) should be scraped or not
-     * @param field_order specifies the field scraping from parent-&gt;child, or viceversa
+     * @param arg_access_specifier field access specifier should be considered
+     * @param arg_include_transient tells if {@code transient} fields should be included
+     * @param arg_include_static tells if {@code static} fields should be included
+     * @param arg_include_parent_fields tells if parent type(s) should be scraped or not
+     * @param arg_field_order specifies the field scraping from parent-&gt;child, or viceversa
+     * @param arg_include_skipped_fields specifies if fields have marked as skipped should be present in parsing stage or not
      */
-    private Type_Signature_Parse_Policy(int access_specifier, boolean include_transient, boolean include_static, boolean include_parent_fields, Field_Definition_Order field_order) {
-        this.access_specifier = access_specifier;
-        this.include_transient = include_transient;
-        this.include_static = include_static;
-        this.include_parent_fields = include_parent_fields;
-        this.field_order = field_order;
+    private Type_Signature_Parse_Policy(int arg_access_specifier, boolean arg_include_transient, boolean arg_include_static, boolean arg_include_parent_fields, Field_Definition_Order arg_field_order,boolean arg_include_skipped_fields) {
+        this.access_specifier = arg_access_specifier;
+        this.include_transient = arg_include_transient;
+        this.include_static = arg_include_static;
+        this.include_parent_fields = arg_include_parent_fields;
+        this.field_order = arg_field_order;
+        this.include_skipped_fields = arg_include_skipped_fields;
     }    
 
     /**
@@ -167,6 +179,17 @@ public class Type_Signature_Parse_Policy {
     public Field_Definition_Order getField_order() {
         return field_order;
     }
-    
+
+    /**
+     * Returns if fields have marked skipped, should be considering in filter too or not.
+     * <p>
+     * Default/logical value should be {@code false}, but in some complex type parsing, this could be handy.
+     * </p>
+     * @return the {@code include_skipped_fields} var.
+     * @since 0.2.1
+     */
+    public boolean isInclude_skipped_fields() {
+        return include_skipped_fields;
+    }
     
 }

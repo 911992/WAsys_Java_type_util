@@ -3,6 +3,20 @@ repo: https://github.com/911992/WAsys_Java_type_util
 file: [class_diagram](./class_diagram.svg)  
 Author: [911992](https://github.com/911992)  
 
+**v0.2.1** (Sept 26, 2020)  
+
+0. Added new `Field_Filter_Entity` entity type
+1. `Type_Parser` class
+    * Methods `parse_no_filter`, `parse`, and `get_fields` now accept `Generic_Filter<Field_Filter_Entity>` rather `Generic_Filter<Field>`
+    * Added `find_getter_method(:Class,:Field,arg_check_as_isAaa:bool):Method` method
+2. `Type_Signature_Parse_Policy` class
+    * Added `include_skipped_fields:bool` field
+3. Added new `annotation` package
+4. Added new `Field_Info` annotation on `annotation` package
+5. Removed `Skip_This_Field` annotation
+
+<hr/>
+
 **v0.1.7** (Aug 23, 2020)  
 
 (that bad-big O boy!)  (╯°□°)╯︵ ┻━┻  

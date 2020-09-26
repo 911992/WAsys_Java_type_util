@@ -2,7 +2,7 @@
 Common type-level utils for Java  
 
 ## Revision History
-Latest: v0.1.9 (Sept 9, 2020)  
+Latest: v0.2.1 (Sept 26, 2020)  
 Please refer to [release_note.md](./release_note.md) file  
 
 ## Requirements
@@ -20,7 +20,7 @@ Artifacts could be grabed from central maven(or build by maven), and or ant.
 <dependency>
     <groupId>com.github.911992</groupId>
     <artifactId>WAsys_Java_type_util</artifactId>
-    <version>0.1.9</version>
+    <version>0.2.1</version>
 </dependency>
 ```
 Or you would clone the repo, and build it as following:
@@ -144,4 +144,82 @@ class Plain_POJO3{
         wth.printStackTrace();
     }   
 }
+```
+
+#### Custom Getter And Setter Methods And Skipping Fields For Parsing
+Since version `0.2.1`, specifying a custom getter/setter method for a field is possible by annotating the target field using `Field_Info` annotation.
+
+Annotation <del>`Skip_This_Field`</del> was removed on version `0.2.1`, and now `Field_Info.skip_this_field` could be used instead. Any field marked as `skip_this_field` will be skipped in type processing stage.
+
+```java
+class Student{
+    
+    @Field_Info(skip_this_field = true)
+    private int not_a_field;
+    
+    @Field_Info(getter_method = "get_the_name",setter_method = "set_name")
+    private String name;
+    
+    @Field_Info(setter_method = "set_age_please")
+    private int age;
+
+    public String get_the_name() {
+        return name;
+    }
+
+    public void set_name(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void set_age_please(int age) {
+        this.age = age;
+    }
+}
+/*....*/
+public static void main(String[] args) {        
+    Type_Signature ts = Type_Parser.parse_no_filter(Student.class, Type_Signature_Parse_Policy.DEFAULT_POLICY);
+    printout_fields(ts);
+}
+public static void printout_fields(Type_Signature<?> arg_typ_sig){
+    for(Type_Field_Signature _tfs_ins : arg_typ_sig.getProceed_fields()){
+        System.out.printf("field: %s , getter:%s, setter:%s\n",_tfs_ins.getField().getName(),_tfs_ins.getGetter_func(),_tfs_ins.getSetter_func());
+    }
+}
+/*
+Result:
+field: name , getter:public java.lang.String type_util_lib_test.Student.get_the_name(), setter:public void type_util_lib_test.Student.set_name(java.lang.String)
+field: age , getter:public int type_util_lib_test.Student.getAge(), setter:public void type_util_lib_test.Student.set_age_please(int)
+*/
+```
+
+#### Dedicated `isAaa` For Boolean Types
+Since version `0.2.1`, `boolean`(also `Boolean`) types could cause the default parser to search for `isAaa` getetr method scheme instead of `getAaa` when it's absent.
+
+```java
+class My_Entity{
+    private boolean valid_state;
+
+    public boolean isValid_state() {
+        return valid_state;
+    }
+
+    public void setValid_state(boolean valid_state) {
+        this.valid_state = valid_state;
+    }
+}
+/*...*/
+public static void main(String[] args) {
+    Type_Signature<My_Entity> _tsig = Type_Parser.parse_no_filter(My_Entity.class, Type_Signature_Parse_Policy.DEFAULT_POLICY);
+    for(Type_Field_Signature _tfs_ins : _tsig.getProceed_fields()){
+        System.out.printf("field: %s , getter:%s, setter:%s\n",_tfs_ins.getField().getName(),_tfs_ins.getGetter_func(),_tfs_ins.getSetter_func());
+    } 
+}
+/*
+Result:
+field: valid_state , getter:public boolean type_util_lib_test.My_Entity.isValid_state(), setter:public void type_util_lib_test.My_Entity.setValid_state(boolean)
+*/
 ```

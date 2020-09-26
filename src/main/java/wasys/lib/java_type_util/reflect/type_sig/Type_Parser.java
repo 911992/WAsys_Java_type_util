@@ -10,10 +10,18 @@ Created on: Jul 3, 2020 3:37:19 PM
     @author https://github.com/911992
  
 History:
-    initial version: 0.1(20200701)
+    0.2.1(20200926)
+        • Using Field_Filter_Entity as type-arg instead of Field as field filter(Generic_Filter)
+        • find_getter_method method now tries for isAaa when field type is boolean, and getAaa is missing
+        • find_method now searches over inherited methods too, rather only declared ones
+        • find_setter_method and find_getter_method now check if given field is annotated to search for a custom getter/setter methods
+        • Added find_getter_method(:Class,:Field,arg_check_as_isAaa:bool):Method method
+        • Minor doc updates/fixes
 
     0.1.1(20200716)
         • parse_no_filter, and parse methods now return templated Type_Signature based on given arg_type type
+
+    initial version: 0.1(20200701)
 */
 
 package wasys.lib.java_type_util.reflect.type_sig;
@@ -22,6 +30,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import wasys.lib.java_type_util.reflect.type_sig.annotation.Field_Info;
 
 
 /**
@@ -96,13 +105,16 @@ public class Type_Parser {
      * <p>
      * If scraping parent type(s) is appreciated, so scraping will be go to {@link Object} type level inheritance.
      * </p>
+     * <p>
+     * Since version 0.2.1, the given {@code arg_filter} should be type-arg of {@link Field_Filter_Entity}.
+     * </p>
      * @param <A> the type of signature, follows the {@code arg_type}
      * @param arg_type the type should be parsed (must <i>not</i> be {@code null})
      * @param arg_pol the policy should be considered (must <i>not</i> be {@code null})
      * @param arg_filter the field filter
      * @return A non-{@code null} type signature
      */
-    public static <A> Type_Signature<A> parse(Class<A> arg_type,Type_Signature_Parse_Policy arg_pol,Generic_Filter<Field> arg_filter){
+    public static <A> Type_Signature<A> parse(Class<A> arg_type,Type_Signature_Parse_Policy arg_pol,Generic_Filter<Field_Filter_Entity> arg_filter){
         if(arg_filter == null){
             arg_filter = Generic_Filter.NULL_OBJECT;
         }
@@ -127,7 +139,7 @@ public class Type_Parser {
      * @param arg_filter the filter fields should be considered
      * @return a list of fields that follows the desired given policy and filter
      */
-    private static ArrayList<Field> get_fields(Class arg_type,Type_Signature_Parse_Policy arg_pol,Generic_Filter<Field> arg_filter){
+    private static ArrayList<Field> get_fields(Class arg_type,Type_Signature_Parse_Policy arg_pol,Generic_Filter<Field_Filter_Entity> arg_filter){
         Class _tp=arg_type;
         ArrayList<Field> _res = new ArrayList<Field>(13);
         Field _field;
@@ -135,13 +147,17 @@ public class Type_Parser {
         int _access_mode;
         int _filter_access_mode;
         int _add_idx;
+        Field_Filter_Entity _working_ffe = new Field_Filter_Entity(); 
+        Field_Info _fi_ins;
         while(_tp != Object.class){
             Field[] _fields = _tp.getDeclaredFields();
             _add_idx = (arg_pol.getField_order()==Field_Definition_Order.From_Parent_To_Child)?0:_res.size();
             for(int a=0;a<_fields.length;a++){
                 _field = _fields[a];
                 _field.setAccessible(true);
-                if(_field.getAnnotation(Skip_This_Field.class)!=null){
+                _working_ffe.setField(_field);
+                _working_ffe.setField_info(_fi_ins=_field.getAnnotation(Field_Info.class));
+                if(_fi_ins!=null && _fi_ins.skip_this_field() && arg_pol.isInclude_skipped_fields()==false){
                     continue;
                 }
                 _mod=_field.getModifiers();
@@ -159,7 +175,7 @@ public class Type_Parser {
                 if((_filter_access_mode & _access_mode) == 0){
                     continue;
                 }
-                if(arg_filter.consider(_field)==false){
+                if(arg_filter.consider(_working_ffe)==false){
                     continue;
                 }
                 _res.add(_add_idx, _field);
@@ -179,27 +195,63 @@ public class Type_Parser {
      * <p>
      * The setter method must be void, and accepts only one argument with type of given type.
      * </p>
+     * <p>
+     * Since version 0.2.1, the given {@code arg_field} is checked if is annotated using {@link Field_Info} or not, to grab the possible custom setter method name.
+     * </p>
      * @param arg_type the class method/field should be scraped
      * @param arg_field the field type should be considered for finding 
      * @return a method that follows as a setter method for given field, or {@code null} if not found
      */
     private static Method find_setter_method(Class arg_type,Field arg_field){
-        String _method_name = aaaMethod_name("set", arg_field.getName());
+        Field_Info _fi = arg_field.getAnnotation(Field_Info.class);
+        String _method_name;
+        if(_fi==null || _fi.setter_method().length()==0){
+            _method_name = aaaMethod_name("set", arg_field.getName());
+        }else{
+            _method_name = _fi.setter_method();
+        }
         return find_method(arg_type,void.class, _method_name, arg_field.getType());
     }
     
     /**
-     * (internal lib use) Tries to find a setter method for given field of given type.
+     * (internal lib use) Calls find_getter_method(:Class,:Field,:bool) to perform real method scraping.
+     * @param arg_type the class method/field should be scraped
+     * @param arg_field the field type should be considered for finding 
+     * @return an instance that works as getter method for given field from type, or {@code null} if not found
+     */
+    private static Method find_getter_method(Class arg_type,Field arg_field){
+        return find_getter_method(arg_type, arg_field, true);
+    }
+    
+    /**
+     * (internal lib use) Tries to find a getter method for given field of given type.
      * <p>
      * The getter method should return a type of field's type, and accepts nothing(void).
      * </p>
+     * <p>
+     * Since version 0.2.1, another call for finding {@code isAaa} as getter method is called for boolean types, where {@code getAaa} fails.<br>
+     * Also, the given {@code arg_field} is checked if is annotated using {@link Field_Info} or not, to grab the possible custom getter method name.
+     * </p>
      * @param arg_type the class method/field should be scraped
      * @param arg_field the field type should be considered for finding 
+     * @param arg_can_check_as_isAaa tells if anotehr check/(recursive-call) should be applied where there is no such getAaa for a boolean type field
      * @return a method that follows as a getter method for given field, or {@code null} if not found
+     * @since 0.2.1
      */
-    private static Method find_getter_method(Class arg_type,Field arg_field){
-        String _method_name = aaaMethod_name("get", arg_field.getName());
-        return find_method(arg_type,arg_field.getType(), _method_name, (Class[])null);
+    private static Method find_getter_method(Class arg_type,Field arg_field,boolean arg_can_check_as_isAaa){
+        Field_Info _fi = arg_field.getAnnotation(Field_Info.class);
+        String _method_name;
+        if(_fi==null || _fi.getter_method().length()==0){
+            _method_name = aaaMethod_name((arg_can_check_as_isAaa?"get":"is"), arg_field.getName());
+        }else{
+            _method_name = _fi.getter_method();
+            arg_can_check_as_isAaa = false;
+        }
+        Method _res = find_method(arg_type,arg_field.getType(), _method_name, (Class[])null);
+        if(arg_can_check_as_isAaa && _res == null && (arg_field.getType() == boolean.class || arg_field.getType() == Boolean.class)){
+            _res = find_getter_method(arg_type, arg_field, false);
+        }
+        return _res;
     }
     
     /**
@@ -216,6 +268,9 @@ public class Type_Parser {
     
     /**
      * (internal lib use) Finds a method based on given return type, name and input args from given type.
+     * <p>
+     * Since version 0.2.1, inherited methods are also searched for requested method.
+     * </p>
      * @param arg_type the type method should be checked(looked up)
      * @param arg_return_type the return type of the method
      * @param arg_method_name name of the method
@@ -223,16 +278,21 @@ public class Type_Parser {
      * @return a method ptr that follows all requirements, or {@code null} if not found
      */
     private static Method find_method(Class arg_type,Class arg_return_type,String arg_method_name,Class ... arg_args){
-        try {
-            Method _res = arg_type.getDeclaredMethod(arg_method_name, arg_args);
-            if(_res.getReturnType()!=arg_return_type){
+        Class _typ = arg_type;
+        while(_typ!=null){
+            try {
+                Method _res = _typ.getDeclaredMethod(arg_method_name, arg_args);
+                if(_res.getReturnType()!=arg_return_type){
+                    return null;
+                }
+                _res.setAccessible(true);
+                return _res;
+            }catch(NoSuchMethodException e){
+            }catch (Throwable wtf) {
+                wtf.printStackTrace();
                 return null;
             }
-            _res.setAccessible(true);
-            return _res;
-        } catch(NoSuchMethodException e){
-        }catch (Throwable wtf) {
-            wtf.printStackTrace();
+            _typ = _typ.getSuperclass();
         }
         return null;
     }

@@ -4,6 +4,40 @@ repo: https://github.com/911992/WAsys_Java_type_util
 Author: [911992](https://github.com/911992)  
 *(NOTE: following list carries mentionable(not all) changes. For detailed changes, check source code(s))*  
 
+**0.2.1** (Sept 26, 2020)
+
+0. Adding support for custom getter and setter methods related to a field
+1. getter/setter method now could be grabbed(searched) from super types too
+2. Dedicated `isAaa` getter method naming for `boolean` and `Boolean` types where `getAaa` fails/misses
+3. `Source_Code::Field_Filter_Entity`
+    * Added to be used as typ-arg as field filter instead of plain `Field` type.
+4. `Source_Code::Type_Parser`
+    * Using `Field_Filter_Entity` as type-arg instead of `Field` as field filter(`Generic_Filter`)
+    * `find_getter_method` method now tries for `isAaa` when field type is `boolean`, and `getAaa` is missing
+    * `find_method` now searches over inherited methods too, rather only declared ones
+    * `find_setter_method` and `find_getter_method` now check if given field is annotated to search for a custom getter/setter methods
+    * Added `find_getter_method(:Class,:Field,arg_check_as_isAaa:bool):Method` method
+    * Minor doc updates/fixes
+5. `Source_Code::Type_Signature_Parse_Policy`
+    * Added field `include_skipped_fields:bool` and its getter method
+    * Updated the default constructor to include the `include_skipped_fields` field 
+6. `Source_Code::Field_Info`
+    * Added, primary usage is about specifying customized info of a field for parsing, such as getter/setter methods, and marked as ignore.
+7. Added new package `wasys.lib.java_type_util.reflect.type_sig.annotation` and its doc file `package-info`
+8. Removed <del>`Skip_This_Field`</del> annotation
+9. Diagrams
+    * Updated [class diagram](./_docs/_diagrams/class_diagram.svg) (changes could be found [here](./_docs/_diagrams/class_diagram_version_history.md))
+10. Repo
+    * update `pom.xml` file
+        * Updated artifact to `0.2.1`
+    * Updated `README.md` file
+        * Added more examples
+            * *Custom Getter And Setter Methods And Skipping Fields For Parsing*
+            * *Dedicated `isAaa` For Boolean Types*
+
+
+<hr/>
+
 **0.1.9** (Sept 9, 2020)
 
 **Module::Type Signature**
