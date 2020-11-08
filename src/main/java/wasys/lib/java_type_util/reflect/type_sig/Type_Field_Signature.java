@@ -10,6 +10,13 @@ Created on: Jul 2, 2020 9:24:15 PM
     @author https://github.com/911992
  
 History:
+    0.2.3(20201108)
+        • Added field_info_user_meta:String, and field_info_user_meta_or_field_name fields:String
+        • constructor now caches(filling field_info_user_meta_or_field_name) the either user-defined name from Field_Info, or the field name
+        • Added get_user_meta_from_field_info_annot(void):String method
+        • Added get_user_meta_from_field_info_annot_or_name(void):String method
+        • Added get_field_name(void):String method
+
     0.1.9(20200909)
         • Fixed the very stupid bug, where == should be supposed =! about field getter method (oh god) (╯°□°)╯︵ ┻━┻
         • Minor doc update
@@ -24,6 +31,7 @@ package wasys.lib.java_type_util.reflect.type_sig;
 import wasys.lib.java_type_util.lib_common.Exceptional_Object_Adapter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import wasys.lib.java_type_util.reflect.type_sig.annotation.Field_Info;
 
 /**
  * Represents a type's field's signature.
@@ -74,6 +82,22 @@ public class Type_Field_Signature extends Exceptional_Object_Adapter{
      * User space for keeping a meta name/data related to this field.
      */
     private String meta_name;
+    
+    /**
+     * User meta string is defined using {@link Field_Info} for the related(this) field.
+     * @since 0.2.3
+     */
+    private final String field_info_user_meta;
+    
+    /**
+     * Holds the safe non-{@code null} field name.
+     * <p>
+     * If the associated {@link Field_Info#user_meta() } is defined(no default), then
+     * it points to that value, otherwise the related {@link Field#getName()}
+     * </p>
+     * @since 0.2.3
+     */
+    private final String field_info_user_meta_or_field_name;
 
     /**
      * Default constructor.
@@ -85,6 +109,17 @@ public class Type_Field_Signature extends Exceptional_Object_Adapter{
         this.field = field;
         this.getter_func = getter_func;
         this.setter_func = setter_func;
+        Field_Info _fi=(Field_Info)field.getAnnotation(Field_Info.class);
+        if(_fi != null){
+            if((this.field_info_user_meta = _fi.user_meta()).length()==0){
+                field_info_user_meta_or_field_name = field.getName();
+            }else{
+                field_info_user_meta_or_field_name = field_info_user_meta;
+            }
+        }else{
+            this.field_info_user_meta = null;
+            field_info_user_meta_or_field_name = field.getName();
+        }
     }
 
     /**
@@ -212,4 +247,45 @@ public class Type_Field_Signature extends Exceptional_Object_Adapter{
     public boolean set_static(Object arg_val){
         return set(null, arg_val);
     }
+    
+    /**
+     * Returns the user specified {@link Field_Info#user_meta()} value.
+     * <p>
+     * If the related field has not annotated using the {@link Field_Info}, then it returns {@code null}.
+     * </p>
+     * <p>
+     * It's {@code null} when the field is not annotated, and it's an empty {@code String}, when
+     * {@link Field_Info#user_meta() } has not set yet(the default value)
+     * </p>
+     * @return the cached user {@link Field_Info#user_meta()} value of related field
+     * @since 0.2.3
+     */
+    public String get_user_meta_from_field_info_annot(){
+        return field_info_user_meta;
+    }
+    
+    /**
+     * Returns the user specified {@link Field_Info#user_meta()} value, or the associated
+     * field name.
+     * <p>
+     * If the associated {@link Field} is annotated by {@link Field_Info}, and it has a <b>not-empty</b> 
+     * {@link Field_Info#user_meta()}, then it's returned, otherwise, the real
+     * field name is returned.
+     * </p>
+     * @return result of {@link #get_user_meta_from_field_info_annot() }(if not {@code null}/empty), or associated {@link Field} name
+     * @since 0.2.3
+     */
+    public String get_user_meta_from_field_info_annot_or_name(){
+        return field_info_user_meta_or_field_name;
+    }
+    
+    /**
+     * Returns the associated {@link Field} name
+     * @return field name by calling {@link Field#getName()}
+     * @since 0.2.3
+     */
+    public String get_field_name(){
+        return this.field.getName();
+    }
+    
 }

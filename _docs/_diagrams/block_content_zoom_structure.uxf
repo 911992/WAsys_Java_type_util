@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.4.0-SNAPSHOT">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>435</x>
+      <y>40</y>
+      <w>180</w>
+      <h>600</h>
+    </coordinates>
+    <panel_attributes>*Document*
+-.
+Project: The Wall
+Title: Block ZoomEd Level Content Data Entry
+-
+*Meta Legends*
+-.
+valign=top
+halign=left
+layer=-100
+bg=light_gray
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>435</x>
+      <y>645</y>
+      <w>180</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>*Authors*
+-
+911992
+https://github.com/911992
+-.
+
+valign=top
+halign=left
+layer=-100
+bg=light_gray
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>110</y>
+      <w>60</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>relation
+--
+lw=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>110</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>A relation/table
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>150</y>
+      <w>60</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ENUM&gt;&gt;
+enum type
+--
+bg=#44eeff
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>150</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>An enum
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>435</x>
+      <y>195</y>
+      <w>75</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>190</y>
+      <w>105</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>Type dependency
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>435</x>
+      <y>220</y>
+      <w>75</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=/fk_col/
+lw=2</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>215</y>
+      <w>105</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>Relation link, fk_col = foreign key column
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>440</x>
+      <y>245</y>
+      <w>60</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Note..
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>245</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>Note
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>440</x>
+      <y>285</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>*X*
+lw=2
+bg=magenta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>465</x>
+      <y>285</y>
+      <w>105</w>
+      <h>25</h>
+    </coordinates>
+    <panel_attributes>On-page reference
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>440</x>
+      <y>475</y>
+      <w>170</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>*Statements*
+-
+‣ array_to_hex_str(msg:array):String
+Convers given array to a hex-string(no leading zeros)
+-.
+‣ array_to_hex_str_lz(msg:array):String
+Convers given array to a hex-string(with leading zeros)
+-.
+‣ hmac(alg:alg,msg:array,secret:array):array
+HMac op
+-.
+‣ hash(alg:alg,msg:array):array
+hash op
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>25</x>
+      <y>40</y>
+      <w>405</w>
+      <h>650</h>
+    </coordinates>
+    <panel_attributes>*Version History*
+-
+*v0.1*
+(Nov 2, 2020)
+Author: 911992
+‣Initial release
+
+-
+*Online Latest Version*
+-.
+Latest PDF version could be found by following link:
+
+
+valign=top
+halign=left
+layer=-100
+bg=light_gray
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>315</y>
+      <w>75</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;json scheme&gt;&gt;
+JSON Scheme
+--
+bg=#80ff00
+transparency=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>445</x>
+      <y>360</y>
+      <w>75</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=(+).&gt;
+&lt;&lt;field&gt;&gt;
+bg=#80ff00
+transparency=0</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>520</x>
+      <y>315</y>
+      <w>90</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>JSON format/scheme definition
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>520</x>
+      <y>355</y>
+      <w>90</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>JSON field association
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>390</y>
+      <w>60</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>relation
+--
+lw=1
+lt=..
+bg=#ffdddd
+fg=#555555</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>390</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>On hold/deprecated
+relation/table
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>435</y>
+      <w>60</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>view
+--
+lw=2
+bg=#ffffee</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>505</x>
+      <y>435</y>
+      <w>105</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>A virtual relation/table(view)
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

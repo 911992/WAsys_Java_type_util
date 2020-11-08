@@ -3,6 +3,17 @@ repo: https://github.com/911992/WAsys_Java_type_util
 file: [class_diagram](./class_diagram.svg)  
 Author: [911992](https://github.com/911992)  
 
+**v0.2.3** (Nov 8, 2020)  
+
+0. `field_info_user_meta` class
+    * Added `field_info_user_meta:String`, and `field_info_user_meta_or_field_name:String` `final` fields
+    * Added `get_user_meta_from_field_info_annot(void):String` method
+    * Added `get_user_meta_from_field_info_annot_or_name(void):String` method
+    * Added `get_field_name(void):String` methods
+    * Added dependency to `Field_Info` type
+
+<hr/>
+
 **v0.2.1** (Sept 26, 2020)  
 
 0. Added new `Field_Filter_Entity` entity type

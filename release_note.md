@@ -4,6 +4,25 @@ repo: https://github.com/911992/WAsys_Java_type_util
 Author: [911992](https://github.com/911992)  
 *(NOTE: following list carries mentionable(not all) changes. For detailed changes, check source code(s))*  
 
+**0.2.3** (Nov 8, 2020)
+
+0. User-defined `meta_name` value from a annotated field(using `Field_Info`) now is stored(cached) in `Type_Field_Signature`
+1. `Source_Code::Type_Field_Signature`
+    * Added `field_info_user_meta:String`, and `field_info_user_meta_or_field_name fields:String`
+    * constructor now caches(filling `field_info_user_meta_or_field_name`) the either user-defined name from `Field_Info`, or the field
+    * Added `get_user_meta_from_field_info_annot(void):String` method
+    * Added `get_user_meta_from_field_info_annot_or_name(void):String` method
+    * Added `get_field_name(void):String` method
+2. Diagrams
+    * Updated [class diagram](./_docs/_diagrams/class_diagram.svg) (changes could be found [here](./_docs/_diagrams/class_diagram_version_history.md))
+3. Repo
+    * update `pom.xml` file
+        * Updated artifact to `0.2.3`
+    * Updated `README.md` file
+
+
+<hr/>
+
 **0.2.1** (Sept 26, 2020)
 
 0. Adding support for custom getter and setter methods related to a field

@@ -2,7 +2,7 @@
 Common type-level utils for Java  
 
 ## Revision History
-Latest: v0.2.1 (Sept 26, 2020)  
+Latest: v0.2.3 (Nov 8, 2020)  
 Please refer to [release_note.md](./release_note.md) file  
 
 ## Requirements
@@ -20,7 +20,7 @@ Artifacts could be grabed from central maven(or build by maven), and or ant.
 <dependency>
     <groupId>com.github.911992</groupId>
     <artifactId>WAsys_Java_type_util</artifactId>
-    <version>0.2.1</version>
+    <version>0.2.3</version>
 </dependency>
 ```
 Or you would clone the repo, and build it as following:
